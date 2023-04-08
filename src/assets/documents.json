@@ -1,0 +1,33 @@
+[
+    {
+        "id": 123,
+        "titre": "Tintin au Tibet",
+        "resume": "Un jeune reporter se lance à la recherche du Yeti avec le capitaine Haddock",
+        "auteur": "Hergé"
+    },
+    {
+        "id": 345,
+        "titre": "Asterix le gaulois",
+        "resume": "Les aventures d'un guerrier Gaulois possédant une potion magique rendant invincible",
+        "auteur": "Gosigny"
+    },
+    {
+        "id": 678,
+        "titre": "le Capital",
+        "resume": "Etude économique sur le travail et le capital",
+        "auteur": "K. Marx"
+    },
+    {
+        "id": 910,
+        "titre": "Mécanique Analytique",
+        "resume": "Les bases de la physique classique",
+        "auteur": "J.L. Lagrange"
+    },
+    {
+        "id": 112,
+        "titre": "La byciclette Bleue",
+        "resume": "Je sais pas, je l'ai pas lu",
+        "auteur": "Deforge"
+    }
+    
+]

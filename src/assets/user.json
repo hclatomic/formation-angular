@@ -1,0 +1,8 @@
+{
+    "id": 123,
+    "nom": "Doe",
+    "prenom": "John",
+    "code" : "abc123def456",
+    "role": "user",
+    "dateNaissance": "23/07/2002"
+}

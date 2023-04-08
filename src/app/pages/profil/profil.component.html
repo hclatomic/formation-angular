@@ -1,0 +1,27 @@
+<p>
+  profil works!
+</p>
+<div class="formulaire">
+  <form [formGroup]="myform" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label>Prénom</label>
+      <input  type="text"
+              class="form-control"
+              placeholder="indiquez votre prénom usuel"
+              formControlName="prenom"
+              required
+      />
+      <div class="form-group">
+        <label>Nom</label>
+        <input  type="text"
+                class="form-control"
+                placeholder="indiquez votre nom de famille"
+                formControlName="nom"
+                required
+        />
+      </div>
+      </div>
+    <button type="submit" class="btn btn-primary">Valider</button>
+  </form>
+</div>

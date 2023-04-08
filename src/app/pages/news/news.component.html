@@ -1,0 +1,13 @@
+<p>
+  news works!
+</p>
+<p>
+  <span [innerHtml]="store.user?.prenom"></span>&nbsp;<span [innerHtml]="store.user?.nom"></span>
+  (id: <span [innerHtml]="store.user?.id"></span>) est né un {{ store.user?.dateNaissance | weekDayOfBirth  }}
+</p>
+<ul>
+  <li *ngFor="let item of store.data.documents">
+    <p class="titre">{{item.titre}}</p>
+    <p class="resume">{{item.resume}}</p>
+  </li>
+</ul>
