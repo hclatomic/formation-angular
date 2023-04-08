@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="header">
+  <h1>Header de l'application</h1>
+  <ul>
+    <li>
+      <a [routerLink]="['news']">News</a>
+    </li>
+    <li>
+      <a routerLink="">Home</a>
+    </li>
+    <li>
+      <a [routerLink]="['profil']">Profil</a>
+    </li>
+</ul>
+  
+  <div class="bonjour">
+    Bonjour 
+    <span [innerHtml]="store.user?.prenom"></span>&nbsp;
+    <span [innerHtml]="store.user?.nom"></span>
+  </div>
+</div>
+</nav>

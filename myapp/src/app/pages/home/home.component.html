@@ -1,0 +1,11 @@
+<div *ngIf="store.status.loading">
+    <p>
+      Loading ...
+    </p>
+</div>
+<div *ngIf="!store.status.loading">
+  <p>
+    Bienvenue !
+  </p>
+  <app-modal [user] = "store.user"></app-modal>
+</div>
