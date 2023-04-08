@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Lazy loading de la page «&nbsp;news&nbsp;»</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:51.393153196"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Lazy loading de la page «&nbsp;news&nbsp;»</h3>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Se placer dans le répertoire de la page «&nbsp;news&nbsp;» et
+	créer un module pour cette page&nbsp;:</p>
+</ul>
+<pre class="western"># cd pages/news
+# ng g module news
+# mv news/news.module.ts . <font color="#ce181e">&lt;&lt;&lt; on place le module directement dans le répertoire news. </font>
+# rm -r  news <font color="#ce181e">&lt;&lt;&lt; on détruit le répertoire devenu inutile</font></pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Se placer dans le répertoire de la page «&nbsp;news&nbsp;» et
+	créer un module de routage&nbsp;:</p>
+</ul>
+<pre class="western"># cd pages/news
+# ng g module news-routing
+# mv news-routing/news-routing.module.ts . <font color="#ce181e">&lt;&lt;&lt; on place le module de routage directement</font>
+<font color="#ce181e">							dans le répertoire news. </font>
+# rm -r  news-routing <font color="#ce181e">&lt;&lt;&lt; on détruit le répertoire devenu inutile</font></pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p class="western" style="margin-left: 1.25cm; margin-bottom: 0cm; line-height: 100%">
+!! Note&nbsp;: relancez VSCode, qui s’embrouille avec ces commandes
+manuelles</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Embarquer le NewsRoutingModule dans le NewsModule en modifiant
+	<font face="FreeMono, monospace"><b>news.module.ts</b></font></p>
+</ul>
+<pre class="western">import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+<b>import { NewsRoutingModule } from './news-routing.module';</b>
+
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule,
+    <b>NewsRoutingModule</b>
+  ]
+})
+export class NewsModule { }
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier <font face="FreeMono, monospace"><b>news-routing.module.ts</b></font>
+	pour embarquer NewsComponent et WeekDayOfBirthModule, qui contient
+	le pipe utile sur la page news&nbsp;:</p>
+</ul>
+<pre class="western">import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+<b>import { NewsComponent } from './news.component';</b>
+<b>import { WeekDayOfBirthModule } from '../../lib/pipes/week-day-of-birth/week-day-of-birth.module';</b>
+
+<b>const routes: Routes = [</b>
+  <b>{ </b>
+     <b>path: '', </b>
+     <b>component: NewsComponent</b>
+  <b>}</b>
+<b>];</b>
+
+
+@NgModule({
+  declarations: [
+    <b>NewsComponent</b>
+  ],
+  imports: [
+    CommonModule,
+    <b>RouterModule.forChild(routes),</b>
+    <b>WeekDayOfBirthModule</b>
+  ]
+})
+export class NewsRoutingModule { }</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p class="western" style="margin-left: 1.25cm; margin-bottom: 0cm; line-height: 100%">
+!! Notez le routing «&nbsp;forChild&nbsp;» au lieu de «&nbsp;forRoot&nbsp;»,
+nécessaire pour une route secondaire en lazy loading. 
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier <font face="Liberation Mono, monospace"><b>app-routing.module.ts</b></font>
+	pour lui indiquer que la route «&nbsp;news&nbsp;» sera en lazy
+	loading,et qu’il n’a plus besoin d’embarquer NewsComponent</p>
+</ul>
+<pre class="western">// import { NewsComponent } from './pages/news/news.component';
+...
+  //{
+  //  path: 'news',
+  //  component: NewsComponent
+  //},
+  { 
+    path: 'news',
+    loadChildren:'./pages/news/news.module#NewsModule',
+  },
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>

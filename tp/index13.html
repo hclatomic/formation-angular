@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Afficher un message dans la modal</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:48.329680816"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Afficher un message dans la modal</h3>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier <font face="FreeMono, monospace"><b>home.component.html</b></font>
+	pour indiquer au composant modal qu’elle lui envoie un message:</p>
+</ul>
+<pre class="western">&lt;app-modal [message] = &quot;message&quot;&gt;&lt;/app-modal&gt;</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier le <font face="FreeMono, monospace"><b>home.component.ts</b></font>
+	pour déclarer la variable message&nbsp;:</p>
+</ul>
+<pre class="western">  message: string;<br/>
+
+  constructor() { 
+    this.message = 'hello les amis !';
+  }</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+</body>
+</html>

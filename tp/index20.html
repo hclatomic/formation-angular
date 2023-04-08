@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Page profil avec formulaire</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:51.757094996"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Page profil avec formulaire, two-way data binding</h3>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Créer la page profil</p>
+</ul>
+<pre class="western"># cd pages
+# ng g component profil
+CREATE src/app/pages/profil/profil.component.css (0 bytes)
+CREATE src/app/pages/profil/profil.component.html (25 bytes)
+CREATE src/app/pages/profil/profil.component.spec.ts (628 bytes)
+CREATE src/app/pages/profil/profil.component.ts (269 bytes)
+UPDATE src/app/app.module.ts (1043 bytes) <font color="#ce181e">&lt;&lt;&lt;  le composant est automatiquement embarqué dans app.module.ts</font></pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	On déplace l’import du composant ProfilComponent depuis
+	<font face="FreeMono, monospace"><b>app.module.ts</b></font>, vers
+	<font face="FreeMono, monospace"><b>app-routing.module.ts</b></font>,
+	et on déclare la nouvelle route</p>
+</ul>
+<pre class="western">import { ProfilComponent } from './pages/profil/profil.component';
+...
+const routes: Routes = [
+  ...
+  {
+    path: 'profil',
+    component: ProfilComponent
+  },
+...
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier la navigation du header pour atteindre la page profil sur
+	un clic, <font face="FreeMono, monospace"><b>header.component.html&nbsp;</b></font>:</p>
+</ul>
+<pre class="western">...
+    &lt;li&gt;
+      &lt;a [routerLink]=&quot;['profil']&quot;&gt;Profil&lt;/a&gt;
+    &lt;/li&gt;
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Vérifier que la page fonctionne</p>
+</ul>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Embarquer les modules standard Angular FormsModule et
+	ReactiveFormsModule dans <font face="FreeMono, monospace"><b>app.module.ts</b></font></p>
+</ul>
+<pre class="western">import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+...
+  imports: [
+    ...
+    FormsModule, 
+    ReactiveFormsModule 
+  ],
+...
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Déclarer le formulaire dans le composant profil,
+	<font face="FreeMono, monospace"><b>profil.component.ts</b></font></p>
+</ul>
+<pre class="western">import { Component, OnInit } from '@angular/core';
+<b>import { FormGroup, FormControl } from '@angular/forms';</b>
+<b>import { StoreService } from '../../lib/services/store.service';</b>
+
+@Component({
+  selector: 'app-profil',
+  templateUrl: './profil.component.html',
+  styleUrls: ['./profil.component.css']
+})
+export class ProfilComponent implements OnInit {
+  
+  <b>myform: FormGroup;</b>
+
+  constructor(
+	<b>private store: StoreService</b>
+  ) { }
+
+  ngOnInit() {
+    <b>this.myform = new FormGroup({</b>
+      <b>nom : new FormControl(),</b>
+      <b>prenom: new FormControl()</b>
+    <b>});</b>
+  }
+
+  <b>onSubmit() {
+   
+    <font color="#ce181e">// On met à jour le store.user avec les nouvelles données du formulaire</font>
+    if (this.myform.value.nom) {
+      this.store.user.nom = this.myform.value.nom;
+    }
+    if (this.myform.value.prenom) {
+      this.store.user.prenom = this.myform.value.prenom;
+    }
+    
+  }</b>
+
+  <!-- <b>onSubmit() {</b>
+    <b>console.log(this.myform.value);</b>
+
+    <b><font color="#ce181e">// </font><font color="#ce181e">On met à jour le store.user avec les nouvelles données
+       du formulaire</font></b>
+    <b>this.store.user.prenom = this.myform.value.prenom;	</b>
+    <b>this.store.user.nom = this.myform.value.nom;	</b>
+  <b>}</b> -->
+
+}</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Mettre en place le formulaire HTML dans <font face="FreeMono, monospace"><b>profil.component.html</b></font></p>
+</ul>
+<pre class="western">&lt;div class=&quot;formulaire&quot;&gt;
+  &lt;form [formGroup]=&quot;myform&quot; (ngSubmit)=&quot;onSubmit()&quot;&gt;
+    
+    &lt;div class=&quot;form-group&quot;&gt;
+      &lt;label&gt;Prénom&lt;/label&gt;
+      &lt;input  type=&quot;text&quot;
+              class=&quot;form-control&quot;
+              placeholder=&quot;indiquez votre prénom usuel&quot;
+              formControlName=&quot;prenom&quot;
+              required
+      /&gt;
+      &lt;div class=&quot;form-group&quot;&gt;
+        &lt;label&gt;Nom&lt;/label&gt;
+        &lt;input  type=&quot;text&quot;
+                class=&quot;form-control&quot;
+                placeholder=&quot;indiquez votre nom de famille&quot;
+                formControlName=&quot;nom&quot;
+                required
+        /&gt;
+      &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;Valider&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Le fichier css associé, <font face="FreeMono, monospace"><b>profil.component.css</b></font></p>
+</ul>
+<pre class="western">.formulaire  {
+    margin: auto;
+    width: 50%;
+}</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Vérifier que tout fonctionne, et qu’une modification des nom et
+	prénom du user se répercute instantanément dans le header et les
+	autres pages (popin sur home, affichage sur news).</p>
+</ul>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Afficher en plus le nom de l’utilisateur dans la modal</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:49.002943186"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Afficher en plus le nom de l’utilisateur dans
+la modal</h3>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	On importe le StoreService dans <font face="FreeMono, monospace"><b>home.component.ts</b></font></p>
+</ul>
+<pre class="western">import { StoreService } from '../../lib/services/store.service';
+...
+  constructor(
+    private store: StoreService
+  ) { }
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	On modifie <font face="FreeMono, monospace"><b>home.component.html</b></font>
+	pour qu’il envoie le user du store au composant modal :</p>
+</ul>
+<pre class="western">&lt;app-modal [user] = &quot;store.user&quot;&gt;&lt;/app-modal&gt;</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	On modifie le <font face="FreeMono, monospace"><b>modal.component.ts</b></font>
+	pour lui ajouter la capacité à recevoir des informations</p>
+</ul>
+<pre class="western">import { Component, OnInit, <b>Input</b> } from '@angular/core';
+...
+export class ModalComponent implements OnInit {
+  <b>@Input() user: any;</b>
+  constructor(...
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	On insère le code suivant dans le template du composant modal,
+	<font face="FreeMono, monospace"><b>modal.component.</b></font><font face="FreeMono, monospace"><b>html</b></font>&nbsp;:</p>
+</ul>
+<pre class="western"> &lt;p&gt;Bonjour &lt;span [innerHtml]=&quot;user.prenom&quot;&gt;&lt;/span&gt;&amp;nbsp;&lt;span [innerHtml]=&quot;user.nom&quot;&gt;&lt;/span&gt; !&lt;/p&gt;
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>

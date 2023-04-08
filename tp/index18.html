@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Boucle ngFor sur la page des news</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:51.068847206"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Boucle ngFor sur la page des news</h3>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Dans assets ajoutons le fichier <font face="FreeMono, monospace"><b>documents.json</b></font>,
+	contenant une liste (tableau) de données</p>
+</ul>
+<pre class="western">[
+    {
+        &quot;id&quot;: 123,
+        &quot;titre&quot;: &quot;Tintin au Tibet&quot;,
+        &quot;resume&quot;: &quot;Un jeune reporter se lance à la recherche du Yeti avec le capitaine Haddock&quot;,
+        &quot;auteur&quot;: &quot;Hergé&quot;
+    },
+    {
+        &quot;id&quot;: 345,
+        &quot;titre&quot;: &quot;Asterix le gaulois&quot;,
+        &quot;resume&quot;: &quot;Les aventures d'un guerrier Gaulois doté d’une potion magique rendant invincible&quot;,
+        &quot;auteur&quot;: &quot;Gosigny&quot;
+    },
+    {
+        &quot;id&quot;: 678,
+        &quot;titre&quot;: &quot;le Capital&quot;,
+        &quot;resume&quot;: &quot;Etude économique sur le travail et le capital&quot;,
+        &quot;auteur&quot;: &quot;K. Marx&quot;
+    },
+    {
+        &quot;id&quot;: 910,
+        &quot;titre&quot;: &quot;Mécanique Analytique&quot;,
+        &quot;resume&quot;: &quot;Les bases de la physique classique&quot;,
+        &quot;auteur&quot;: &quot;J.L. Lagrange&quot;
+    },
+    {
+        &quot;id&quot;: 112,
+        &quot;titre&quot;: &quot;La byciclette Bleue&quot;,
+        &quot;resume&quot;: &quot;Je sais pas, je l'ai pas lu&quot;,
+        &quot;auteur&quot;: &quot;Deforge&quot;
+    }
+    
+]</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Créer le service api qui ira lire ces données, comme nous avons lu
+	le user, dans ApiService&nbsp;:</p>
+</ul>
+<pre class="western">  getDocuments = () =&gt; {
+    this.store.status.loading++;
+    setTimeout( () =&gt; {
+      this.http.get('assets/documents.json').subscribe({
+        next: result =&gt; { this.store.data.documents = result; },
+        error: err =&gt; { console.error('Error: ' + err); },
+        complete: () =&gt; { 
+          console.log('-- call ended --'); 
+          this.store.status.loading--;
+        }  
+      });
+    },2000); //on impose un setTimeout pour simuler un réseau très lent
+  }
+</pre><p class="western" style="margin-left: 1.25cm; margin-bottom: 0cm; line-height: 100%">
+A noter qu’à la place des 2 fonctions getUser et getDocument, il
+serait possible de ne fabriquer qu’une seule fonction
+«&nbsp;getData(url, storePlace)&nbsp;» qui reçoit en entrée l’url
+(user.json ou document.json), et la place dans le store (store.user
+ou store.data.documents). Tout dépend de la politique API que vous
+choisirez.</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Importer le service api dans <font face="FreeMono, monospace"><b>news.component.ts</b></font></p>
+</ul>
+<pre class="western">import { ApiService } from '../../lib/services/api.service';
+...
+  constructor(
+    private store: StoreService,
+    private api: ApiService
+  ) {
+
+    if(!this.store.data.documents) { //On ne se sert de l’API que si le store est vide
+      this.api.getDocuments();
+    }
+  }
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier <font face="FreeMono, monospace"><b>news.component.html</b></font>
+	pour afficher la liste des documents&nbsp;:</p>
+</ul>
+<pre class="western">&lt;ul&gt;
+  &lt;li *ngFor=&quot;<b>let item of store.data.documents</b>&quot;&gt;
+    &lt;p class=&quot;titre&quot;&gt;{{item.titre}}&lt;/p&gt;
+    &lt;p class=&quot;resume&quot;&gt;{{item.resume}}&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Afficher les caractéristiques du user aussi sur la page «&nbsp;news&nbsp;»</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:47.566431447"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Afficher les caractéristiques du user aussi sur
+la page «&nbsp;news&nbsp;»</h3>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Importer le StoreService dans le composant <font face="FreeMono, monospace"><b>news.component.ts</b></font></p>
+</ul>
+<pre class="western">import { Component, OnInit } from '@angular/core';
+import { StoreService } from '../../lib/services/store.service';
+
+@Component({
+  selector: 'app-news',
+  templateUrl: './news.component.html',
+  styleUrls: ['./news.component.css']
+})
+export class NewsComponent implements OnInit {
+
+  constructor(
+    private store: StoreService
+  ) { }
+
+  ngOnInit() {
+  }
+
+}</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier le template <font face="FreeMono, monospace"><b>news.component.html</b></font></p>
+</ul>
+<pre class="western">&lt;p&gt;
+  The user 
+  &lt;span [innerHtml]=&quot;store.user?.prenom&quot;&gt;&lt;/span&gt; 
+  &lt;span [innerHtml]=&quot;store.user?.nom&quot;&gt;&lt;/span&gt;
+  has id: &lt;span [innerHtml]=&quot;store.user?.id&quot;&gt;&lt;/span&gt;
+&lt;/p&gt;
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>

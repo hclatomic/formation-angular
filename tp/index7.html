@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Créer une navigation dans le header</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:46.151520725"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Créer une navigation dans le header</h3>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier <font face="FreeMono, monospace"><b>header.componen.html</b></font>&nbsp;:</p>
+</ul>
+<pre class="western">&lt;div class=&quot;header&quot;&gt;
+  &lt;h1&gt;Header de l'application&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;a [routerLink]=&quot;[‘news’]&quot;&gt;News&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;a routerLink=&quot;&quot;&gt;Home&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</pre>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Embarquer le  RouterModule dans <font face="FreeMono, monospace"><b>app.module.ts</b></font></p>
+</ul>
+<pre class="western">import { RouterModule } from '@angular/router';
+...
+  imports: [
+    ...
+    RouterModule
+  ],</pre>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Vérifier qu’on navigue d’une page à l’autre en cliquant sur
+	les liens</p>
+</ul>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>

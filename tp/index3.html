@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Création du composant header</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:44.682753416"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 >Création du composant header</h3>
+<p class="western">Tout site possède un header, indépendant des pages. Il faut en créer un :
+<pre>
+# cd src/app
+# ng generate component header
+CREATE src/app/header/header.component.css (0 bytes)
+CREATE src/app/header/header.component.html (25 bytes)
+CREATE src/app/header/header.component.spec.ts (628 bytes)
+CREATE src/app/header/header.component.ts (269 bytes)
+<font color="#ce181e"><font color="#000000">UPDATE src/app/app.module.ts (475 bytes) </font>&lt;&lt;&lt; le composant header a été déclaré</font>
+<font color="#ce181e">dans app.module.ts</font></pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+</p>
+
+
+<p class="western">Préparer un container dans le fichier <b>header.component.html</b> :
+<pre>
+&lt;div class="header"&gt;&lt;/div&gt;
+</pre>
+</p>
+	
+<p class="western">
+Puis déclarer la classe css dans le fichier <b>header.component.css</b>
+<pre>
+.header {
+	position : fixed ;
+	top : 0 ;
+	left : 0 ;
+	z-index : 999 ;
+	width : 100 %;
+	height : 60px ;
+	background : blue ;
+}
+</pre>
+</p>
+<p class="western">
+Intégrer le header dans le composant app.component.html :
+<pre>
+&lt;app-header&gt;&lt;/app-header&gt;
+&lt;div class="appContainer"&gt;
+	&lt;h1&gt;Hello&lt;/h1&gt;
+	&lt;router-outlet&gt;&lt;/router-outlet&gt;
+&lt;/div&gt;
+</pre>
+</p>
+	
+<p class="western">
+	Le titre « Hello » n’est plus visible, car il est situé sous le header.<br>
+	Il faut donc encapsuler le contenu visible du <b>app.component.html</b> 
+	dans un div de classe appContainer contenue par <b>app.component.css</b> définie ainsi :
+<pre>
+.appContainer : {
+	margin-top : 60px ; /*hauteur du header*/
+}
+</pre>
+</p>
+
+<p class="western">Enregistrer et regarder le résultat.</p>
+
+</body>
+</html>

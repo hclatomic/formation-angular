@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Rendre un pipe partageable en l’installant dans un module</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:50.316511013"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Rendre un pipe partageable en l’installant dans
+un module</h3>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-left: 1.25cm; margin-bottom: 0cm; line-height: 100%">
+Un pipe n’est reconnu que dans le module (et ses sous modules) dans
+lequel il est importé. Le lazy loading (voir plus bas) casse cet
+héritage, et un pipe reconnu dans le routage principal ne le sera
+plus dans une route montée en lazy loading. Il faudrait réimporter
+le pipe dans la lazy route, mais ce n’est pas possible de monter un
+pipe dans deux modules. Il faut donc utiliser  le module qui emporte
+le pipe, mais pas le pipe directement.</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Créer un module WeekDayOfBirthModule</p>
+</ul>
+<pre class="western"># cd lib/pipes
+# ng g module week-day-of-birth 
+# mv week-day-of-birth.pipe.* week-day-of-birth <font color="#ce181e">&lt;&lt;&lt; on déplace tous les fichiers concernant le pipe dans le répertoire de son nom.</font></pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Importez et exportez le pipe dans le module en modifiant 
+	<font face="FreeMono, monospace"><b>week-day-of-birth.module.ts</b></font></p>
+</ul>
+<pre class="western">import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { <b>WeekDayOfBirthPipe</b> } from './week-day-of-birth.pipe';
+
+@NgModule({
+  declarations: [
+    <b>WeekDayOfBirthPipe</b>
+  ],
+  imports: [
+    CommonModule
+  ],
+  <b>exports: [</b>
+    <b>WeekDayOfBirthPipe</b>
+  <b>]</b>
+})
+export class WeekDayOfBirthModule { }</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Décharger <font face="FreeMono, monospace"><b>app.module.ts</b></font>
+	de l’emport de WeekDayOfBirthPipe, et importez le module du pipe
+	WeekDayOfBirthModule dans <font face="FreeMono, monospace"><b>app-routing.module.ts</b></font></p>
+</ul>
+<pre class="western">import { WeekDayOfBirthModule } from './lib/pipes/week-day-of-birth/week-day-of-birth.module';
+...
+  imports: [
+    ...
+    WeekDayOfBirthModule
+  ],
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Vérifier que le résultat est le même que sans module d’emport
+	du pipe.</p>
+</ul>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Créer un service d’api récupérant les informations sur un user</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:46.454540222"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Créer un service d’api récupérant les
+informations sur un user</h3>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Créer un service api</p>
+</ul>
+<pre class="western"># cd app
+# mkdir lib
+# cd lib
+# mkdir services
+# cd services
+# ng generate service api</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Comme ce service sera global à l’application, le déclarer dans
+	<font face="FreeMono, monospace"><b>app.module.ts</b></font></p>
+</ul>
+<pre class="western">...
+import { ApiService } from './lib/services/api.service';
+...
+providers&nbsp;: [
+	 ApiService
+]
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Créer un fichier <font face="FreeMono, monospace"><b>user.json</b></font>
+	dans le répertoire <font face="FreeMono, monospace"><b>src/asset</b></font></p>
+</ul>
+<pre class="western">{
+    &quot;id&quot;: 123,
+    &quot;nom&quot;: &quot;Doe&quot;,
+    &quot;prenom&quot;: &quot;John&quot;,
+    &quot;code&quot; : &quot;abc123def456&quot;,
+    &quot;role&quot;: &quot;user&quot;,
+    &quot;dateNaissance&quot;: &quot;23/05/2003&quot;
+}</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Importer HttpClienModule dans <font face="FreeMono, monospace"><b>app.module.ts</b></font>&nbsp;:</p>
+</ul>
+<pre class="western">...
+import { HttpClientModule }  from '@angular/common/http';
+...
+imports: [
+	...
+	HttpClientModule
+]
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Importer HttpClient dans <font face="FreeMono, monospace"><b>api.service.ts</b></font></p>
+</ul>
+<pre class="western">...
+import { HttpClient }  from '@angular/common/http';
+...
+constructor(
+    private http: HttpClient
+) { 
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Ajouter une méthode «&nbsp;getUser&nbsp;» au service qui récupère
+	les données user</p>
+</ul>
+<pre class="western">getUser = () =&gt; {
+
+		setTimeout( () => {
+			this.http.get('assets/user.json').subscribe({
+				next: result =&gt; { console.log(result); },
+				error: err =&gt; { console.error('Error: ' + err); },
+				complete: () =&gt; { console.log('call ended'); }  
+			});
+		},2000); //on impose un setTimeout pour simuler un réseau très lent
+
+  }</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+</body>
+</html>

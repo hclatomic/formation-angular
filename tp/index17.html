@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Afficher «&nbsp;Loading ...&nbsp;» sur la home page tant que l’api n’a pas retourné de résultats</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:50.667937064"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Afficher «&nbsp;Loading ...&nbsp;» sur la home
+page tant que l’api n’a pas retourné de résultats</h3>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Dans <font face="FreeMono, monospace"><b>app-routing.module.ts</b></font>,
+	importer les CommonModule&nbsp;:</p>
+</ul>
+<pre class="western">...
+import { CommonModule } from '@angular/common';  
+...
+  imports: [
+    ...
+    CommonModule
+  ],
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Dans <font face="FreeMono, monospace"><b>api.service.ts</b></font>,
+	déclarer un status dans le store qui fasse état du loading en
+	cours de chaque api appelée</p>
+</ul>
+<pre class="western">  getUser = () =&gt; {
+
+    this.store.status.loading++;
+
+    setTimeout( () =&gt; {
+      this.http.get('assets/user.json').subscribe({
+        next: result =&gt; { this.store.user = result; },
+        error: err =&gt; { console.error('Error: ' + err); },
+        complete: () =&gt; { 
+          console.log('-- call ended --'); 
+          this.store.status.loading--;
+        }  
+      });
+    },2000); //on impose un setTimeout pour simuler un réseau très lent
+
+  }</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Déclarer la branche status.loading dans <font face="FreeMono, monospace"><b>store.service.ts</b></font></p>
+</ul>
+<pre class="western">  status: any = {
+    loading: 0
+  };</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Comme on importe déjà le store dans home.component, nous n’avons
+	qu’à modifier le template <font face="FreeMono, monospace"><b>home.component.html</b></font></p>
+</ul>
+<pre class="western">&lt;div *ngIf=&quot;store.status.loading&quot;&gt;
+    &lt;p&gt;
+      Loading ...
+    &lt;/p&gt;
+&lt;/div&gt;
+&lt;div *ngIf=&quot;!store.status.loading&quot;&gt;
+  &lt;p&gt;
+    Bienvenue !
+  &lt;/p&gt;
+  &lt;app-modal [user] = &quot;store.user&quot;&gt;&lt;/app-modal&gt;
+&lt;/div&gt;</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Le Loading ne s’efface que si store.status.loading = 0&nbsp;;</p>
+</ul>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>

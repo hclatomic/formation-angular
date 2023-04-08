@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Installer sur la home page un bouton qui déclenche une modal Bootstrap</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:47.924984750"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Installer sur la home page un bouton qui
+déclenche une modal Bootstrap</h3>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Installer bootstrap (voir <a href="https://ng-bootstrap.github.io/">https://ng-bootstrap.github.io</a>)
+	en lançant la commande</p>
+</ul>
+<pre class="western">
+# npm i --save @ng-bootstrap/ng-bootstrap
+# npm i --save bootstrap
+</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Importer Bootstrap dans le fichier <font face="FreeMono, monospace"><b>src/style.css</b></font>
+	en y ajoutant</p>
+</ul>
+<pre class="western">@import &quot;../node_modules/bootstrap/dist/css/bootstrap.css&quot;</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Créer un composant partageable «&nbsp;modal&nbsp;», donc embarqué
+	dans son module</p>
+</ul>
+<pre class="western"># cd /lib
+# mkdir modules
+# cd modules
+# ng g module modal
+# ng g component modal
+CREATE src/app/lib/modules/modal/modal.component.css (0 bytes)
+CREATE src/app/lib/modules/modal/modal.component.html (24 bytes)
+CREATE src/app/lib/modules/modal/modal.component.spec.ts (621 bytes)
+CREATE src/app/lib/modules/modal/modal.component.ts (265 bytes)
+UPDATE src/app/lib/modules/modal/modal.module.ts (255 bytes) <font color="#ce181e">&lt;&lt;&lt; le composant ModalComponent est embarqué dans le ModalModule</font></pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Exporter le composant ModalComponent depuis le ModalModule&nbsp;:</p>
+</ul>
+<pre class="western">...
+  exports: [
+    ModalComponent
+  ]</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Importez le ModalModule dans le module important aussi le composant
+	home page, c’est à dire <font face="FreeMono, monospace"><b>app-routing.module.ts</b></font></p>
+</ul>
+<pre class="western">import { ModalModule } from './lib/modules/modal/modal.module';
+...
+  imports: [
+    ...
+    ModalModule
+  ],
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Afficher le composant modal sur la home page, c’est à dire
+	modifier <font face="FreeMono, monospace"><b>home.component.html</b></font></p>
+</ul>
+<pre class="western">&lt;p&gt;
+  home works!
+&lt;/p&gt;
+&lt;app-modal&gt;&lt;/app-modal&gt;</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Vérifier que tout fonctionne bien.</p>
+</ul>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Allez sur <a href="https://ng-bootstrap.github.io/">https://ng-bootstrap.github.io</a>
+	et cliquez sur Components &gt; Modal. Choisissez une modal et
+	recopiez ses codes HTML et Typescript.</p>
+</ul>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>

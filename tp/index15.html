@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title>Afficher le jour de la semaine de naissance de l’utilisateur, grâce à un pipe</title>
+	<meta name="generator" content="LibreOffice 6.0.7.3 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2019-04-11T15:20:49.685983422"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { margin-bottom: 0.25cm; line-height: 115% }
+		p.western { font-family: "Liberation Sans", sans-serif; font-size: 10pt }
+		p.cjk { font-size: 10pt }
+		h3.western { font-family: "Liberation Sans", sans-serif; font-size: 14pt }
+		h3.cjk { font-family: "Noto Sans CJK SC Regular"; font-size: 14pt }
+		h3.ctl { font-family: "Lohit Devanagari"; font-size: 14pt }
+		pre { margin-left: 1.3cm; border: none; padding: 0cm; color: #0d1f63; background: #dddddd; page-break-before: auto }
+		pre.western { font-size: 8pt }
+		pre.cjk { font-family: "DejaVu Sans Mono", monospace }
+		a:link { so-language: zxx }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="opener.js"></script>
+	
+</head>
+<body lang="fr-FR" dir="ltr">
+<h3 class="western">Afficher le jour de la semaine de naissance de
+l’utilisateur, grâce à un pipe</h3>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifier <font face="FreeMono, monospace"><b>news.component.html</b></font>
+	en y inscrivant</p>
+</ul>
+<pre class="western">&lt;p&gt;
+  &lt;span [innerHtml]=&quot;store.user?.prenom&quot;&gt;&lt;/span&gt;&amp;nbsp;&lt;span [innerHtml]=&quot;store.user?.nom&quot;&gt;&lt;/span&gt;
+  (id: &lt;span [innerHtml]=&quot;store.user?.id&quot;&gt;&lt;/span&gt;) est né un <br/>
+  {{ store.user.dateNaissance | weekDayOfBirth }}
+&lt;/p&gt;</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Créons le filtre attendu «&nbsp;weekDayOfBirth&nbsp;», qui sera
+	automatiquement déclaré dans <font face="FreeMono, monospace"><b>app.module.ts</b></font></p>
+</ul>
+<pre class="western"># cd lib
+# mkdir pipes
+# cd pipes
+#ng g pipe weekDayOfBirth
+CREATE src/app/lib/pipes/week-day-of-birth.pipe.spec.ts (222 bytes)
+CREATE src/app/lib/pipes/week-day-of-birth.pipe.ts (217 bytes)
+UPDATE src/app/app.module.ts (1022 bytes) <font color="#ce181e">&lt;&lt;&lt; emport du pipe dans app.module</font></pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<ul>
+	<li/>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%">
+	Modifions le pipe <font face="FreeMono, monospace"><b>week-day-of-birth.pipe.ts</b></font></p>
+</ul>
+<pre class="western"> ...
+  transform(value: any, args?: any): any {
+
+    let weekDay: string = ‘jour indéfini’;
+
+    if(value &amp;&amp; value.match(/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/)) {
+      const arr = value.split('/').map((x: string) =&gt; parseInt(x, 10));
+      const laDate = new Date(arr[2], arr[1], arr[0], 0, 0, 0, 1);
+      switch(laDate.getDay()) {
+        case 0: weekDay = 'dimanche'; break;
+        case 1: weekDay = 'lundi'; break;
+        case 2: weekDay = 'mardi'; break;
+        case 3: weekDay = 'mercredi'; break;
+        case 4: weekDay = 'jeudi'; break;
+        case 5: weekDay = 'vendredi'; break;
+        case 6: weekDay = 'samedi'; break;
+      }
+
+    }
+
+    return weekDay;
+  }
+...</pre><p class="western" style="margin-bottom: 0cm; line-height: 100%">
+<br/>
+
+</p>
+<p class="western" style="margin-bottom: 0cm; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>
